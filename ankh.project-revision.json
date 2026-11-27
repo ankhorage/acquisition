@@ -1,0 +1,1855 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "id": "acquisition",
+    "name": "Acquisition"
+  },
+  "revision": {
+    "id": "acquisition-template-bd392ac284621165",
+    "savedAt": "2026-11-27T00:00:00.000Z",
+    "manifest": {
+      "metadata": {
+        "name": "Acquisition",
+        "slug": "acquisition",
+        "version": "1.0.0",
+        "category": "business_productivity",
+        "themeId": "acquisition"
+      },
+      "themes": {
+        "acquisition": {
+          "id": "acquisition",
+          "name": "Acquisition",
+          "light": {
+            "primaryColor": "#7C3AED",
+            "harmony": "analogous"
+          },
+          "dark": {
+            "primaryColor": "#A78BFA",
+            "harmony": "analogous"
+          },
+          "tokens": {
+            "spacing": {
+              "none": 0,
+              "xs": 4,
+              "s": 8,
+              "m": 16,
+              "l": 24,
+              "xl": 32,
+              "xxl": 48
+            },
+            "radii": {
+              "none": 0,
+              "s": 8,
+              "m": 16,
+              "l": 24,
+              "full": 9999
+            }
+          }
+        }
+      },
+      "activeThemeId": "acquisition",
+      "activeThemeMode": "light",
+      "settings": {
+        "localization": {
+          "defaultLocale": "en",
+          "locales": [
+            "en"
+          ]
+        }
+      },
+      "state": {
+        "provider": "legend",
+        "persistence": false
+      },
+      "infra": {
+        "environments": {
+          "local": {
+            "deployment": {
+              "compute": {
+                "provider": "local"
+              },
+              "runtime": {
+                "provider": "minikube"
+              }
+            },
+            "database": {
+              "provider": "supabase",
+              "tier": "dev"
+            },
+            "secretStore": {
+              "provider": "supabase-vault"
+            }
+          }
+        },
+        "modules": {},
+        "apis": {
+          "zefix": {
+            "id": "zefix",
+            "origin": "external",
+            "protocol": "rest",
+            "name": "Zefix PublicREST",
+            "baseUrl": "https://www.zefix.admin.ch/ZefixPublicREST",
+            "credential": {
+              "id": "zefix-credentials",
+              "kind": "basic"
+            },
+            "endpoints": {
+              "company-search": {
+                "id": "company-search",
+                "kind": "http",
+                "path": "/api/v1/company/search",
+                "operations": {
+                  "company.search": {
+                    "id": "company.search",
+                    "endpointId": "company-search",
+                    "name": "Search companies",
+                    "protocol": "http",
+                    "intent": "read",
+                    "method": "POST",
+                    "path": "/api/v1/company/search",
+                    "request": {
+                      "contentType": "application/json",
+                      "parameters": [
+                        {
+                          "name": "name",
+                          "location": "body",
+                          "required": true,
+                          "schema": {
+                            "type": "string"
+                          }
+                        },
+                        {
+                          "name": "legalFormId",
+                          "location": "body",
+                          "schema": {
+                            "type": "integer"
+                          }
+                        },
+                        {
+                          "name": "legalFormUid",
+                          "location": "body",
+                          "schema": {
+                            "type": "string"
+                          }
+                        },
+                        {
+                          "name": "registryOfCommerceId",
+                          "location": "body",
+                          "schema": {
+                            "type": "integer"
+                          }
+                        },
+                        {
+                          "name": "legalSeatId",
+                          "location": "body",
+                          "schema": {
+                            "type": "integer"
+                          }
+                        },
+                        {
+                          "name": "canton",
+                          "location": "body",
+                          "schema": {
+                            "type": "string"
+                          }
+                        },
+                        {
+                          "name": "activeOnly",
+                          "location": "body",
+                          "schema": {
+                            "type": "boolean"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "company-uid": {
+                "id": "company-uid",
+                "kind": "http",
+                "path": "/api/v1/company/uid/{id}",
+                "operations": {
+                  "company.get-by-uid": {
+                    "id": "company.get-by-uid",
+                    "endpointId": "company-uid",
+                    "name": "Get company by UID",
+                    "protocol": "http",
+                    "intent": "read",
+                    "method": "GET",
+                    "path": "/api/v1/company/uid/{id}",
+                    "request": {
+                      "parameters": [
+                        {
+                          "name": "id",
+                          "location": "path",
+                          "required": true,
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "media": {
+        "assets": {
+          "acquisition-target": {
+            "id": "acquisition-target",
+            "name": "Acquisition target mark",
+            "kind": "image",
+            "source": {
+              "kind": "bundled",
+              "path": "assets/images/svg/acquisition-target.svg"
+            },
+            "contentType": "image/svg+xml"
+          }
+        }
+      },
+      "navigator": {
+        "type": "stack",
+        "implementation": "native",
+        "options": {
+          "headerShown": false
+        },
+        "initialRouteName": "acquisition",
+        "routes": [
+          {
+            "name": "acquisition",
+            "path": "/",
+            "label": "Companies",
+            "screenId": "acquisition"
+          },
+          {
+            "name": "company-detail-wetzikon-technik",
+            "path": "/companies/wetzikon-technik",
+            "label": "Wetzikon Technik AG",
+            "screenId": "company-detail-wetzikon-technik"
+          },
+          {
+            "name": "company-detail-alpenblick-digital",
+            "path": "/companies/alpenblick-digital",
+            "label": "Alpenblick Digital GmbH",
+            "screenId": "company-detail-alpenblick-digital"
+          },
+          {
+            "name": "company-detail-seeblick-architektur",
+            "path": "/companies/seeblick-architektur",
+            "label": "Seeblick Architektur AG",
+            "screenId": "company-detail-seeblick-architektur"
+          }
+        ]
+      },
+      "screens": {
+        "acquisition": {
+          "id": "acquisition",
+          "name": "Acquisition list",
+          "title": "Acquisition",
+          "description": "Local demo company discovery without live Zefix or CRM access.",
+          "root": {
+            "id": "acquisition-root",
+            "type": "Screen",
+            "props": {
+              "width": "wide",
+              "scroll": false
+            },
+            "children": [
+              {
+                "id": "acquisition-master-detail",
+                "type": "MasterDetail",
+                "props": {
+                  "activePane": "master",
+                  "desktopMode": "split",
+                  "masterWidth": 30
+                },
+                "children": [
+                  {
+                    "id": "acquisition-master-pane",
+                    "type": "View",
+                    "props": {
+                      "flex": 1,
+                      "p": "m",
+                      "accessibilityLabel": "Company list"
+                    },
+                    "children": [
+                      {
+                        "id": "acquisition-mark",
+                        "type": "Icon",
+                        "props": {
+                          "source": {
+                            "mediaId": "acquisition-target"
+                          },
+                          "accessibilityLabel": "Acquisition"
+                        }
+                      },
+                      {
+                        "id": "acquisition-title",
+                        "type": "Heading",
+                        "props": {
+                          "text": "Acquisition",
+                          "level": 1,
+                          "size": "h1"
+                        }
+                      },
+                      {
+                        "id": "acquisition-lead",
+                        "type": "Text",
+                        "props": {
+                          "text": "Find companies, manage your acquisition list, and record call results.",
+                          "variant": "lead"
+                        }
+                      },
+                      {
+                        "id": "company-search",
+                        "type": "SearchInput",
+                        "props": {
+                          "value": "",
+                          "placeholder": "Search company (e.g. name, UID)",
+                          "clearable": true
+                        }
+                      },
+                      {
+                        "id": "company-filters",
+                        "type": "View",
+                        "props": {
+                          "direction": "row",
+                          "wrap": true,
+                          "gap": "s",
+                          "accessibilityLabel": "Company filters"
+                        },
+                        "children": [
+                          {
+                            "id": "filter-canton",
+                            "type": "Select",
+                            "props": {
+                              "label": "Canton",
+                              "placeholder": "All cantons",
+                              "options": []
+                            }
+                          },
+                          {
+                            "id": "filter-legal-form",
+                            "type": "Select",
+                            "props": {
+                              "label": "Legal form",
+                              "placeholder": "All legal forms",
+                              "options": []
+                            }
+                          },
+                          {
+                            "id": "filter-status",
+                            "type": "Select",
+                            "props": {
+                              "label": "Status",
+                              "placeholder": "All statuses",
+                              "options": []
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "acquisition-list-heading",
+                        "type": "Heading",
+                        "props": {
+                          "text": "Demo companies",
+                          "level": 2,
+                          "size": "h2"
+                        }
+                      },
+                      {
+                        "id": "acquisition-data-table",
+                        "type": "DataTable",
+                        "props": {
+                          "rows": [
+                            {
+                              "id": "wetzikon-technik",
+                              "name": "Wetzikon Technik AG",
+                              "uid": "CHE-412.987.654",
+                              "location": "Wetzikon (ZH)",
+                              "logo": "data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\" viewBox=\"0 0 64 64\"%3E%3Crect width=\"64\" height=\"64\" rx=\"12\" fill=\"%237C3AED\"/%3E%3Cpath d=\"M18 44V24l14-8 14 8v20H18Zm8-4h4v-8h4v8h4V24l-6-3-6 3v16Z\" fill=\"white\"/%3E%3C/svg%3E",
+                              "website": "wetzikon-technik.ch",
+                              "websiteUrl": "https://wetzikon-technik.ch",
+                              "route": "/companies/wetzikon-technik",
+                              "legalForm": "AG",
+                              "status": "Prospect"
+                            },
+                            {
+                              "id": "alpenblick-digital",
+                              "name": "Alpenblick Digital GmbH",
+                              "uid": "CHE-208.041.118",
+                              "location": "Zürich (ZH)",
+                              "logo": "data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\" viewBox=\"0 0 64 64\"%3E%3Crect width=\"64\" height=\"64\" rx=\"12\" fill=\"%237C3AED\"/%3E%3Cpath d=\"M18 44V24l14-8 14 8v20H18Zm8-4h4v-8h4v8h4V24l-6-3-6 3v16Z\" fill=\"white\"/%3E%3C/svg%3E",
+                              "website": "alpenblick-digital.ch",
+                              "websiteUrl": "https://alpenblick-digital.ch",
+                              "route": "/companies/alpenblick-digital",
+                              "legalForm": "GmbH",
+                              "status": "Prospect"
+                            },
+                            {
+                              "id": "seeblick-architektur",
+                              "name": "Seeblick Architektur AG",
+                              "uid": "CHE-355.109.712",
+                              "location": "Rapperswil (SG)",
+                              "logo": "data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\" viewBox=\"0 0 64 64\"%3E%3Crect width=\"64\" height=\"64\" rx=\"12\" fill=\"%237C3AED\"/%3E%3Cpath d=\"M18 44V24l14-8 14 8v20H18Zm8-4h4v-8h4v8h4V24l-6-3-6 3v16Z\" fill=\"white\"/%3E%3C/svg%3E",
+                              "website": "seeblick-architektur.ch",
+                              "websiteUrl": "https://seeblick-architektur.ch",
+                              "route": "/companies/seeblick-architektur",
+                              "legalForm": "AG",
+                              "status": "New"
+                            }
+                          ],
+                          "rowKey": "route",
+                          "density": "compact",
+                          "columns": [
+                            {
+                              "id": "company",
+                              "header": "Company",
+                              "minWidth": 240,
+                              "cell": {
+                                "kind": "stack",
+                                "direction": "row",
+                                "align": "center",
+                                "gap": "s",
+                                "children": [
+                                  {
+                                    "kind": "image",
+                                    "source": "logo",
+                                    "alt": "name"
+                                  },
+                                  {
+                                    "kind": "stack",
+                                    "direction": "column",
+                                    "gap": "xxs",
+                                    "children": [
+                                      {
+                                        "kind": "text",
+                                        "value": "name",
+                                        "weight": "bold"
+                                      },
+                                      {
+                                        "kind": "link",
+                                        "href": "websiteUrl",
+                                        "label": "website",
+                                        "variant": "caption"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "id": "location",
+                              "header": "Location",
+                              "accessor": "location",
+                              "minWidth": 140
+                            },
+                            {
+                              "id": "status",
+                              "header": "Status",
+                              "accessor": "status",
+                              "minWidth": 100
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "id": "zefix-search-results-heading",
+                        "type": "Heading",
+                        "props": {
+                          "text": "Zefix search results",
+                          "level": 2,
+                          "size": "h2"
+                        }
+                      },
+                      {
+                        "id": "zefix-search-results",
+                        "type": "DataTable",
+                        "props": {
+                          "rows": [],
+                          "rowKey": "uid",
+                          "density": "compact",
+                          "columns": [
+                            {
+                              "id": "name",
+                              "header": "Company",
+                              "minWidth": 240,
+                              "cell": {
+                                "kind": "text",
+                                "value": "name",
+                                "weight": "bold"
+                              }
+                            },
+                            {
+                              "id": "uid",
+                              "header": "UID",
+                              "accessor": "uid",
+                              "minWidth": 160
+                            },
+                            {
+                              "id": "legalSeat",
+                              "header": "Legal seat",
+                              "accessor": "legalSeat",
+                              "minWidth": 160
+                            },
+                            {
+                              "id": "status",
+                              "header": "Status",
+                              "accessor": "status",
+                              "minWidth": 100
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "acquisition-detail-pane",
+                    "type": "View",
+                    "props": {
+                      "flex": 1,
+                      "p": "m",
+                      "accessibilityLabel": "Selected company detail"
+                    },
+                    "children": [
+                      {
+                        "id": "company-mark-wetzikon-technik",
+                        "type": "Image",
+                        "props": {
+                          "source": {
+                            "mediaId": "acquisition-target"
+                          },
+                          "alt": "Generic Acquisition company mark",
+                          "width": 64,
+                          "height": 64,
+                          "radius": "m"
+                        }
+                      },
+                      {
+                        "id": "company-title-wetzikon-technik",
+                        "type": "Heading",
+                        "props": {
+                          "text": "Wetzikon Technik AG",
+                          "level": 1,
+                          "size": "h1"
+                        }
+                      },
+                      {
+                        "id": "company-meta-wetzikon-technik",
+                        "type": "Text",
+                        "props": {
+                          "text": "UID CHE-412.987.654 · Wetzikon (ZH) · wetzikon-technik.ch",
+                          "variant": "bodySmall"
+                        }
+                      },
+                      {
+                        "id": "company-status-wetzikon-technik",
+                        "type": "Badge",
+                        "props": {
+                          "label": "Prospect",
+                          "color": "primary"
+                        }
+                      },
+                      {
+                        "id": "company-actions-wetzikon-technik",
+                        "type": "View",
+                        "props": {
+                          "direction": "row",
+                          "wrap": true,
+                          "gap": "s",
+                          "accessibilityLabel": "Company actions"
+                        },
+                        "children": [
+                          {
+                            "id": "company-call-wetzikon-technik",
+                            "type": "Button",
+                            "props": {
+                              "children": "Call",
+                              "variant": "solid"
+                            }
+                          },
+                          {
+                            "id": "company-email-wetzikon-technik",
+                            "type": "Button",
+                            "props": {
+                              "children": "Email",
+                              "variant": "outline"
+                            }
+                          },
+                          {
+                            "id": "company-follow-up-wetzikon-technik",
+                            "type": "Button",
+                            "props": {
+                              "children": "Schedule follow-up",
+                              "variant": "outline"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "company-overview-wetzikon-technik",
+                        "type": "Heading",
+                        "props": {
+                          "text": "Overview",
+                          "level": 2,
+                          "size": "h2"
+                        }
+                      },
+                      {
+                        "id": "company-basics-wetzikon-technik",
+                        "type": "Card",
+                        "props": {
+                          "title": "Company Basics",
+                          "tone": "default"
+                        },
+                        "children": [
+                          {
+                            "id": "company-name-field-wetzikon-technik",
+                            "type": "Text",
+                            "props": {
+                              "text": "Company name: Wetzikon Technik AG",
+                              "variant": "body"
+                            }
+                          },
+                          {
+                            "id": "company-uid-field-wetzikon-technik",
+                            "type": "Text",
+                            "props": {
+                              "text": "UID: CHE-412.987.654",
+                              "variant": "body"
+                            }
+                          },
+                          {
+                            "id": "company-location-field-wetzikon-technik",
+                            "type": "Text",
+                            "props": {
+                              "text": "Location: Wetzikon (ZH)",
+                              "variant": "body"
+                            }
+                          },
+                          {
+                            "id": "company-website-field-wetzikon-technik",
+                            "type": "Text",
+                            "props": {
+                              "text": "Website: wetzikon-technik.ch",
+                              "variant": "body"
+                            }
+                          },
+                          {
+                            "id": "company-status-field-wetzikon-technik",
+                            "type": "Text",
+                            "props": {
+                              "text": "Status: Prospect",
+                              "variant": "body"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "company-contacts-wetzikon-technik",
+                        "type": "Card",
+                        "props": {
+                          "title": "Contacts",
+                          "description": "Local demo contact records. They are not Zefix data and are not persisted."
+                        },
+                        "children": [
+                          {
+                            "id": "contact-thomas-meier",
+                            "type": "Card",
+                            "props": {
+                              "title": "Thomas Meier",
+                              "eyebrow": "CEO",
+                              "description": "t.meier@wetzikon-technik.ch · +41 44 972 31 20",
+                              "tone": "subtle",
+                              "compact": true
+                            }
+                          },
+                          {
+                            "id": "contact-sandra-keller",
+                            "type": "Card",
+                            "props": {
+                              "title": "Sandra Keller",
+                              "eyebrow": "Head of Sales",
+                              "description": "s.keller@wetzikon-technik.ch · +41 44 972 31 25",
+                              "tone": "subtle",
+                              "compact": true
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "company-history-heading-wetzikon-technik",
+                        "type": "Heading",
+                        "props": {
+                          "text": "History",
+                          "level": 2,
+                          "size": "h2"
+                        }
+                      },
+                      {
+                        "id": "company-history-wetzikon-technik",
+                        "type": "Timeline",
+                        "props": {
+                          "items": [
+                            {
+                              "id": "added-to-acquisition",
+                              "title": "Added to acquisition list",
+                              "description": "Local demo event.",
+                              "meta": "15 Jan 2025, 09:14",
+                              "status": "success",
+                              "marker": {
+                                "mediaId": "acquisition-target"
+                              },
+                              "markerAlt": "Acquisition target marker"
+                            },
+                            {
+                              "id": "first-call-attempt",
+                              "title": "First call attempt — Not reached",
+                              "description": "Local demo event.",
+                              "meta": "15 Jan 2025, 14:37",
+                              "status": "warning",
+                              "marker": {
+                                "mediaId": "acquisition-target"
+                              },
+                              "markerAlt": "Acquisition target marker"
+                            },
+                            {
+                              "id": "follow-up-scheduled",
+                              "title": "Follow-up scheduled",
+                              "description": "Local demo follow-up. It is not persisted.",
+                              "meta": "22 Jan 2025, 10:00",
+                              "status": "primary",
+                              "marker": {
+                                "mediaId": "acquisition-target"
+                              },
+                              "markerAlt": "Acquisition target marker"
+                            },
+                            {
+                              "id": "note-added",
+                              "title": "Note added",
+                              "description": "Interested in a product demo. Call again next week.",
+                              "meta": "22 Jan 2025, 10:05",
+                              "status": "info",
+                              "marker": {
+                                "mediaId": "acquisition-target"
+                              },
+                              "markerAlt": "Acquisition target marker"
+                            }
+                          ],
+                          "compact": false
+                        }
+                      },
+                      {
+                        "id": "company-next-step-wetzikon-technik",
+                        "type": "Card",
+                        "props": {
+                          "title": "Next Step",
+                          "description": "A local draft only. No call outcome or date is persisted."
+                        },
+                        "children": [
+                          {
+                            "id": "company-follow-up-date-wetzikon-technik",
+                            "type": "DatePicker",
+                            "props": {
+                              "label": "Current action",
+                              "value": "2025-01-22",
+                              "required": false
+                            }
+                          },
+                          {
+                            "id": "company-call-result-wetzikon-technik",
+                            "type": "RadioGroup",
+                            "props": {
+                              "value": "follow-up",
+                              "orientation": "horizontal",
+                              "presentation": "card",
+                              "options": [
+                                {
+                                  "value": "not-reached",
+                                  "label": "Not reached"
+                                },
+                                {
+                                  "value": "interested",
+                                  "label": "Interested"
+                                },
+                                {
+                                  "value": "follow-up",
+                                  "label": "Follow-up"
+                                },
+                                {
+                                  "value": "no-need",
+                                  "label": "No need"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "company-detail-wetzikon-technik": {
+          "id": "company-detail-wetzikon-technik",
+          "name": "Wetzikon Technik AG detail",
+          "title": "Wetzikon Technik AG",
+          "description": "Local demo company detail with no backend persistence.",
+          "root": {
+            "id": "company-detail-root-wetzikon-technik",
+            "type": "Screen",
+            "props": {
+              "width": "default",
+              "scroll": true
+            },
+            "children": [
+              {
+                "id": "company-back-wetzikon-technik",
+                "type": "Button",
+                "props": {
+                  "children": "Back to companies",
+                  "variant": "ghost"
+                }
+              },
+              {
+                "id": "company-mark-wetzikon-technik",
+                "type": "Image",
+                "props": {
+                  "source": {
+                    "mediaId": "acquisition-target"
+                  },
+                  "alt": "Generic Acquisition company mark",
+                  "width": 64,
+                  "height": 64,
+                  "radius": "m"
+                }
+              },
+              {
+                "id": "company-title-wetzikon-technik",
+                "type": "Heading",
+                "props": {
+                  "text": "Wetzikon Technik AG",
+                  "level": 1,
+                  "size": "h1"
+                }
+              },
+              {
+                "id": "company-meta-wetzikon-technik",
+                "type": "Text",
+                "props": {
+                  "text": "UID CHE-412.987.654 · Wetzikon (ZH) · wetzikon-technik.ch",
+                  "variant": "bodySmall"
+                }
+              },
+              {
+                "id": "company-status-wetzikon-technik",
+                "type": "Badge",
+                "props": {
+                  "label": "Prospect",
+                  "color": "primary"
+                }
+              },
+              {
+                "id": "company-actions-wetzikon-technik",
+                "type": "View",
+                "props": {
+                  "direction": "row",
+                  "wrap": true,
+                  "gap": "s",
+                  "accessibilityLabel": "Company actions"
+                },
+                "children": [
+                  {
+                    "id": "company-call-wetzikon-technik",
+                    "type": "Button",
+                    "props": {
+                      "children": "Call",
+                      "variant": "solid"
+                    }
+                  },
+                  {
+                    "id": "company-email-wetzikon-technik",
+                    "type": "Button",
+                    "props": {
+                      "children": "Email",
+                      "variant": "outline"
+                    }
+                  },
+                  {
+                    "id": "company-follow-up-wetzikon-technik",
+                    "type": "Button",
+                    "props": {
+                      "children": "Schedule follow-up",
+                      "variant": "outline"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "company-overview-wetzikon-technik",
+                "type": "Heading",
+                "props": {
+                  "text": "Overview",
+                  "level": 2,
+                  "size": "h2"
+                }
+              },
+              {
+                "id": "company-basics-wetzikon-technik",
+                "type": "Card",
+                "props": {
+                  "title": "Company Basics",
+                  "tone": "default"
+                },
+                "children": [
+                  {
+                    "id": "company-name-field-wetzikon-technik",
+                    "type": "Text",
+                    "props": {
+                      "text": "Company name: Wetzikon Technik AG",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-uid-field-wetzikon-technik",
+                    "type": "Text",
+                    "props": {
+                      "text": "UID: CHE-412.987.654",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-location-field-wetzikon-technik",
+                    "type": "Text",
+                    "props": {
+                      "text": "Location: Wetzikon (ZH)",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-website-field-wetzikon-technik",
+                    "type": "Text",
+                    "props": {
+                      "text": "Website: wetzikon-technik.ch",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-status-field-wetzikon-technik",
+                    "type": "Text",
+                    "props": {
+                      "text": "Status: Prospect",
+                      "variant": "body"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "company-contacts-wetzikon-technik",
+                "type": "Card",
+                "props": {
+                  "title": "Contacts",
+                  "description": "Local demo contact records. They are not Zefix data and are not persisted."
+                },
+                "children": [
+                  {
+                    "id": "contact-thomas-meier",
+                    "type": "Card",
+                    "props": {
+                      "title": "Thomas Meier",
+                      "eyebrow": "CEO",
+                      "description": "t.meier@wetzikon-technik.ch · +41 44 972 31 20",
+                      "tone": "subtle",
+                      "compact": true
+                    }
+                  },
+                  {
+                    "id": "contact-sandra-keller",
+                    "type": "Card",
+                    "props": {
+                      "title": "Sandra Keller",
+                      "eyebrow": "Head of Sales",
+                      "description": "s.keller@wetzikon-technik.ch · +41 44 972 31 25",
+                      "tone": "subtle",
+                      "compact": true
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "company-history-heading-wetzikon-technik",
+                "type": "Heading",
+                "props": {
+                  "text": "History",
+                  "level": 2,
+                  "size": "h2"
+                }
+              },
+              {
+                "id": "company-history-wetzikon-technik",
+                "type": "Timeline",
+                "props": {
+                  "items": [
+                    {
+                      "id": "added-to-acquisition",
+                      "title": "Added to acquisition list",
+                      "description": "Local demo event.",
+                      "meta": "15 Jan 2025, 09:14",
+                      "status": "success",
+                      "marker": {
+                        "mediaId": "acquisition-target"
+                      },
+                      "markerAlt": "Acquisition target marker"
+                    },
+                    {
+                      "id": "first-call-attempt",
+                      "title": "First call attempt — Not reached",
+                      "description": "Local demo event.",
+                      "meta": "15 Jan 2025, 14:37",
+                      "status": "warning",
+                      "marker": {
+                        "mediaId": "acquisition-target"
+                      },
+                      "markerAlt": "Acquisition target marker"
+                    },
+                    {
+                      "id": "follow-up-scheduled",
+                      "title": "Follow-up scheduled",
+                      "description": "Local demo follow-up. It is not persisted.",
+                      "meta": "22 Jan 2025, 10:00",
+                      "status": "primary",
+                      "marker": {
+                        "mediaId": "acquisition-target"
+                      },
+                      "markerAlt": "Acquisition target marker"
+                    },
+                    {
+                      "id": "note-added",
+                      "title": "Note added",
+                      "description": "Interested in a product demo. Call again next week.",
+                      "meta": "22 Jan 2025, 10:05",
+                      "status": "info",
+                      "marker": {
+                        "mediaId": "acquisition-target"
+                      },
+                      "markerAlt": "Acquisition target marker"
+                    }
+                  ],
+                  "compact": false
+                }
+              },
+              {
+                "id": "company-next-step-wetzikon-technik",
+                "type": "Card",
+                "props": {
+                  "title": "Next Step",
+                  "description": "A local draft only. No call outcome or date is persisted."
+                },
+                "children": [
+                  {
+                    "id": "company-follow-up-date-wetzikon-technik",
+                    "type": "DatePicker",
+                    "props": {
+                      "label": "Current action",
+                      "value": "2025-01-22",
+                      "required": false
+                    }
+                  },
+                  {
+                    "id": "company-call-result-wetzikon-technik",
+                    "type": "RadioGroup",
+                    "props": {
+                      "value": "follow-up",
+                      "orientation": "horizontal",
+                      "presentation": "card",
+                      "options": [
+                        {
+                          "value": "not-reached",
+                          "label": "Not reached"
+                        },
+                        {
+                          "value": "interested",
+                          "label": "Interested"
+                        },
+                        {
+                          "value": "follow-up",
+                          "label": "Follow-up"
+                        },
+                        {
+                          "value": "no-need",
+                          "label": "No need"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "company-detail-alpenblick-digital": {
+          "id": "company-detail-alpenblick-digital",
+          "name": "Alpenblick Digital GmbH detail",
+          "title": "Alpenblick Digital GmbH",
+          "description": "Local demo company detail with no backend persistence.",
+          "root": {
+            "id": "company-detail-root-alpenblick-digital",
+            "type": "Screen",
+            "props": {
+              "width": "default",
+              "scroll": true
+            },
+            "children": [
+              {
+                "id": "company-back-alpenblick-digital",
+                "type": "Button",
+                "props": {
+                  "children": "Back to companies",
+                  "variant": "ghost"
+                }
+              },
+              {
+                "id": "company-mark-alpenblick-digital",
+                "type": "Image",
+                "props": {
+                  "source": {
+                    "mediaId": "acquisition-target"
+                  },
+                  "alt": "Generic Acquisition company mark",
+                  "width": 64,
+                  "height": 64,
+                  "radius": "m"
+                }
+              },
+              {
+                "id": "company-title-alpenblick-digital",
+                "type": "Heading",
+                "props": {
+                  "text": "Alpenblick Digital GmbH",
+                  "level": 1,
+                  "size": "h1"
+                }
+              },
+              {
+                "id": "company-meta-alpenblick-digital",
+                "type": "Text",
+                "props": {
+                  "text": "UID CHE-208.041.118 · Zürich (ZH) · alpenblick-digital.ch",
+                  "variant": "bodySmall"
+                }
+              },
+              {
+                "id": "company-status-alpenblick-digital",
+                "type": "Badge",
+                "props": {
+                  "label": "Prospect",
+                  "color": "primary"
+                }
+              },
+              {
+                "id": "company-actions-alpenblick-digital",
+                "type": "View",
+                "props": {
+                  "direction": "row",
+                  "wrap": true,
+                  "gap": "s",
+                  "accessibilityLabel": "Company actions"
+                },
+                "children": [
+                  {
+                    "id": "company-call-alpenblick-digital",
+                    "type": "Button",
+                    "props": {
+                      "children": "Call",
+                      "variant": "solid"
+                    }
+                  },
+                  {
+                    "id": "company-email-alpenblick-digital",
+                    "type": "Button",
+                    "props": {
+                      "children": "Email",
+                      "variant": "outline"
+                    }
+                  },
+                  {
+                    "id": "company-follow-up-alpenblick-digital",
+                    "type": "Button",
+                    "props": {
+                      "children": "Schedule follow-up",
+                      "variant": "outline"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "company-overview-alpenblick-digital",
+                "type": "Heading",
+                "props": {
+                  "text": "Overview",
+                  "level": 2,
+                  "size": "h2"
+                }
+              },
+              {
+                "id": "company-basics-alpenblick-digital",
+                "type": "Card",
+                "props": {
+                  "title": "Company Basics",
+                  "tone": "default"
+                },
+                "children": [
+                  {
+                    "id": "company-name-field-alpenblick-digital",
+                    "type": "Text",
+                    "props": {
+                      "text": "Company name: Alpenblick Digital GmbH",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-uid-field-alpenblick-digital",
+                    "type": "Text",
+                    "props": {
+                      "text": "UID: CHE-208.041.118",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-location-field-alpenblick-digital",
+                    "type": "Text",
+                    "props": {
+                      "text": "Location: Zürich (ZH)",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-website-field-alpenblick-digital",
+                    "type": "Text",
+                    "props": {
+                      "text": "Website: alpenblick-digital.ch",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-status-field-alpenblick-digital",
+                    "type": "Text",
+                    "props": {
+                      "text": "Status: Prospect",
+                      "variant": "body"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "company-contacts-alpenblick-digital",
+                "type": "Card",
+                "props": {
+                  "title": "Contacts",
+                  "description": "Local demo contact records. They are not Zefix data and are not persisted."
+                },
+                "children": []
+              },
+              {
+                "id": "company-history-heading-alpenblick-digital",
+                "type": "Heading",
+                "props": {
+                  "text": "History",
+                  "level": 2,
+                  "size": "h2"
+                }
+              },
+              {
+                "id": "company-history-alpenblick-digital",
+                "type": "Timeline",
+                "props": {
+                  "items": [],
+                  "compact": false
+                }
+              },
+              {
+                "id": "company-next-step-alpenblick-digital",
+                "type": "Card",
+                "props": {
+                  "title": "Next Step",
+                  "description": "A local draft only. No call outcome or date is persisted."
+                },
+                "children": [
+                  {
+                    "id": "company-follow-up-date-alpenblick-digital",
+                    "type": "DatePicker",
+                    "props": {
+                      "label": "Current action",
+                      "value": "2025-01-22",
+                      "required": false
+                    }
+                  },
+                  {
+                    "id": "company-call-result-alpenblick-digital",
+                    "type": "RadioGroup",
+                    "props": {
+                      "value": "follow-up",
+                      "orientation": "horizontal",
+                      "presentation": "card",
+                      "options": [
+                        {
+                          "value": "not-reached",
+                          "label": "Not reached"
+                        },
+                        {
+                          "value": "interested",
+                          "label": "Interested"
+                        },
+                        {
+                          "value": "follow-up",
+                          "label": "Follow-up"
+                        },
+                        {
+                          "value": "no-need",
+                          "label": "No need"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "company-detail-seeblick-architektur": {
+          "id": "company-detail-seeblick-architektur",
+          "name": "Seeblick Architektur AG detail",
+          "title": "Seeblick Architektur AG",
+          "description": "Local demo company detail with no backend persistence.",
+          "root": {
+            "id": "company-detail-root-seeblick-architektur",
+            "type": "Screen",
+            "props": {
+              "width": "default",
+              "scroll": true
+            },
+            "children": [
+              {
+                "id": "company-back-seeblick-architektur",
+                "type": "Button",
+                "props": {
+                  "children": "Back to companies",
+                  "variant": "ghost"
+                }
+              },
+              {
+                "id": "company-mark-seeblick-architektur",
+                "type": "Image",
+                "props": {
+                  "source": {
+                    "mediaId": "acquisition-target"
+                  },
+                  "alt": "Generic Acquisition company mark",
+                  "width": 64,
+                  "height": 64,
+                  "radius": "m"
+                }
+              },
+              {
+                "id": "company-title-seeblick-architektur",
+                "type": "Heading",
+                "props": {
+                  "text": "Seeblick Architektur AG",
+                  "level": 1,
+                  "size": "h1"
+                }
+              },
+              {
+                "id": "company-meta-seeblick-architektur",
+                "type": "Text",
+                "props": {
+                  "text": "UID CHE-355.109.712 · Rapperswil (SG) · seeblick-architektur.ch",
+                  "variant": "bodySmall"
+                }
+              },
+              {
+                "id": "company-status-seeblick-architektur",
+                "type": "Badge",
+                "props": {
+                  "label": "New",
+                  "color": "primary"
+                }
+              },
+              {
+                "id": "company-actions-seeblick-architektur",
+                "type": "View",
+                "props": {
+                  "direction": "row",
+                  "wrap": true,
+                  "gap": "s",
+                  "accessibilityLabel": "Company actions"
+                },
+                "children": [
+                  {
+                    "id": "company-call-seeblick-architektur",
+                    "type": "Button",
+                    "props": {
+                      "children": "Call",
+                      "variant": "solid"
+                    }
+                  },
+                  {
+                    "id": "company-email-seeblick-architektur",
+                    "type": "Button",
+                    "props": {
+                      "children": "Email",
+                      "variant": "outline"
+                    }
+                  },
+                  {
+                    "id": "company-follow-up-seeblick-architektur",
+                    "type": "Button",
+                    "props": {
+                      "children": "Schedule follow-up",
+                      "variant": "outline"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "company-overview-seeblick-architektur",
+                "type": "Heading",
+                "props": {
+                  "text": "Overview",
+                  "level": 2,
+                  "size": "h2"
+                }
+              },
+              {
+                "id": "company-basics-seeblick-architektur",
+                "type": "Card",
+                "props": {
+                  "title": "Company Basics",
+                  "tone": "default"
+                },
+                "children": [
+                  {
+                    "id": "company-name-field-seeblick-architektur",
+                    "type": "Text",
+                    "props": {
+                      "text": "Company name: Seeblick Architektur AG",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-uid-field-seeblick-architektur",
+                    "type": "Text",
+                    "props": {
+                      "text": "UID: CHE-355.109.712",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-location-field-seeblick-architektur",
+                    "type": "Text",
+                    "props": {
+                      "text": "Location: Rapperswil (SG)",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-website-field-seeblick-architektur",
+                    "type": "Text",
+                    "props": {
+                      "text": "Website: seeblick-architektur.ch",
+                      "variant": "body"
+                    }
+                  },
+                  {
+                    "id": "company-status-field-seeblick-architektur",
+                    "type": "Text",
+                    "props": {
+                      "text": "Status: New",
+                      "variant": "body"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "company-contacts-seeblick-architektur",
+                "type": "Card",
+                "props": {
+                  "title": "Contacts",
+                  "description": "Local demo contact records. They are not Zefix data and are not persisted."
+                },
+                "children": []
+              },
+              {
+                "id": "company-history-heading-seeblick-architektur",
+                "type": "Heading",
+                "props": {
+                  "text": "History",
+                  "level": 2,
+                  "size": "h2"
+                }
+              },
+              {
+                "id": "company-history-seeblick-architektur",
+                "type": "Timeline",
+                "props": {
+                  "items": [],
+                  "compact": false
+                }
+              },
+              {
+                "id": "company-next-step-seeblick-architektur",
+                "type": "Card",
+                "props": {
+                  "title": "Next Step",
+                  "description": "A local draft only. No call outcome or date is persisted."
+                },
+                "children": [
+                  {
+                    "id": "company-follow-up-date-seeblick-architektur",
+                    "type": "DatePicker",
+                    "props": {
+                      "label": "Current action",
+                      "value": "2025-01-22",
+                      "required": false
+                    }
+                  },
+                  {
+                    "id": "company-call-result-seeblick-architektur",
+                    "type": "RadioGroup",
+                    "props": {
+                      "value": "follow-up",
+                      "orientation": "horizontal",
+                      "presentation": "card",
+                      "options": [
+                        {
+                          "value": "not-reached",
+                          "label": "Not reached"
+                        },
+                        {
+                          "value": "interested",
+                          "label": "Interested"
+                        },
+                        {
+                          "value": "follow-up",
+                          "label": "Follow-up"
+                        },
+                        {
+                          "value": "no-need",
+                          "label": "No need"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "dataBindings": {
+        "company-search": {
+          "componentId": "company-search",
+          "componentType": "SearchInput",
+          "props": {
+            "value": {
+              "value": {
+                "kind": "fallback",
+                "value": {
+                  "capability": "state.acquisition",
+                  "path": "searchQuery"
+                },
+                "fallback": {
+                  "kind": "literal",
+                  "value": ""
+                }
+              }
+            }
+          },
+          "events": {
+            "valueChange": [
+              {
+                "target": {
+                  "capability": "state.set",
+                  "input": {
+                    "path": {
+                      "kind": "literal",
+                      "value": "acquisition.searchQuery"
+                    },
+                    "value": {
+                      "capability": "searchInput.valueChange",
+                      "path": "payload.value"
+                    }
+                  }
+                }
+              }
+            ],
+            "clear": [
+              {
+                "target": {
+                  "capability": "state.set",
+                  "input": {
+                    "path": {
+                      "kind": "literal",
+                      "value": "acquisition.searchQuery"
+                    },
+                    "value": {
+                      "kind": "literal",
+                      "value": ""
+                    }
+                  }
+                }
+              }
+            ],
+            "submit": [
+              {
+                "target": {
+                  "capability": "api.zefix.company.search",
+                  "input": {
+                    "body": {
+                      "kind": "object",
+                      "fields": {
+                        "name": {
+                          "capability": "state.acquisition",
+                          "path": "searchQuery"
+                        }
+                      }
+                    }
+                  },
+                  "result": "acquisition.zefix.search"
+                },
+                "when": {
+                  "source": {
+                    "kind": "fallback",
+                    "value": {
+                      "capability": "state.acquisition",
+                      "path": "searchQuery"
+                    },
+                    "fallback": {
+                      "kind": "literal",
+                      "value": ""
+                    }
+                  },
+                  "operator": "neq",
+                  "value": {
+                    "kind": "literal",
+                    "value": ""
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "acquisition-data-table": {
+          "componentId": "acquisition-data-table",
+          "componentType": "DataTable",
+          "props": {
+            "selectedRowIds": {
+              "value": {
+                "kind": "fallback",
+                "value": {
+                  "capability": "state.acquisition",
+                  "path": "selectedCompanyRoutes"
+                },
+                "fallback": {
+                  "kind": "literal",
+                  "value": [
+                    "/companies/wetzikon-technik"
+                  ]
+                }
+              }
+            }
+          },
+          "events": {
+            "selectionChange": [
+              {
+                "target": {
+                  "capability": "state.set",
+                  "input": {
+                    "path": {
+                      "kind": "literal",
+                      "value": "acquisition.selectedCompanyRoutes"
+                    },
+                    "value": {
+                      "capability": "dataTable.selectionChange",
+                      "path": "payload.selectedRowIds"
+                    }
+                  }
+                }
+              }
+            ],
+            "rowActivate": [
+              {
+                "target": {
+                  "capability": "navigator.navigate",
+                  "input": {
+                    "route": {
+                      "capability": "dataTable.rowActivate",
+                      "path": "payload.rowId"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "zefix-search-results": {
+          "componentId": "zefix-search-results",
+          "componentType": "DataTable",
+          "props": {
+            "rows": {
+              "value": {
+                "kind": "fallback",
+                "value": {
+                  "capability": "api.zefix.company.search",
+                  "result": "acquisition.zefix.search"
+                },
+                "fallback": {
+                  "kind": "literal",
+                  "value": []
+                }
+              }
+            },
+            "selectedRowIds": {
+              "value": {
+                "kind": "fallback",
+                "value": {
+                  "capability": "state.acquisition",
+                  "path": "selectedZefixCompanyUids"
+                },
+                "fallback": {
+                  "kind": "literal",
+                  "value": []
+                }
+              }
+            }
+          },
+          "events": {
+            "selectionChange": [
+              {
+                "target": {
+                  "capability": "state.set",
+                  "input": {
+                    "path": {
+                      "kind": "literal",
+                      "value": "acquisition.selectedZefixCompanyUids"
+                    },
+                    "value": {
+                      "capability": "dataTable.selectionChange",
+                      "path": "payload.selectedRowIds"
+                    }
+                  }
+                }
+              }
+            ],
+            "rowActivate": [
+              {
+                "target": {
+                  "capability": "state.set",
+                  "input": {
+                    "path": {
+                      "kind": "literal",
+                      "value": "acquisition.activeZefixCompanyUid"
+                    },
+                    "value": {
+                      "capability": "dataTable.rowActivate",
+                      "path": "payload.rowId"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "company-back-wetzikon-technik": {
+          "componentId": "company-back-wetzikon-technik",
+          "componentType": "Button",
+          "events": {
+            "press": [
+              {
+                "target": {
+                  "capability": "navigator.navigate",
+                  "input": {
+                    "route": {
+                      "kind": "literal",
+                      "value": "/"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "company-back-alpenblick-digital": {
+          "componentId": "company-back-alpenblick-digital",
+          "componentType": "Button",
+          "events": {
+            "press": [
+              {
+                "target": {
+                  "capability": "navigator.navigate",
+                  "input": {
+                    "route": {
+                      "kind": "literal",
+                      "value": "/"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "company-back-seeblick-architektur": {
+          "componentId": "company-back-seeblick-architektur",
+          "componentType": "Button",
+          "events": {
+            "press": [
+              {
+                "target": {
+                  "capability": "navigator.navigate",
+                  "input": {
+                    "route": {
+                      "kind": "literal",
+                      "value": "/"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "manifestSha256": "bd392ac284621165f0b739555c47b41c6ace61f8ae4795a8cd211c1336c05482",
+  "materializer": {
+    "package": "@ankhorage/projects",
+    "version": "0.6.0",
+    "template": "business_productivity/acquisition",
+    "navigator": {
+      "platform": "web",
+      "expoRouterVersion": "57.0.32"
+    }
+  },
+  "files": [
+    "README.md",
+    "ankh.config.json",
+    "ankh.template.json",
+    "app.config.ts",
+    "assets/images/svg/acquisition-target.svg",
+    "package.json",
+    "src/ankh.manifest.ts",
+    "src/app/_layout.tsx",
+    "src/app/acquisition.tsx",
+    "src/app/company-detail-alpenblick-digital.tsx",
+    "src/app/company-detail-seeblick-architektur.tsx",
+    "src/app/company-detail-wetzikon-technik.tsx",
+    "src/generated/runtimeManifestScreens.tsx",
+    "src/generated/runtimeShell.tsx"
+  ]
+}
