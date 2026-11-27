@@ -1,13 +1,14 @@
 # Materialization record
 
-This standalone Expo project was materialized from the published
+This standalone Expo project was rematerialized from the published
 `business_productivity/acquisition` template.
 
 - Immutable revision: `acquisition-template-bd392ac284621165`
 - Manifest SHA-256:
   `bd392ac284621165f0b739555c47b41c6ace61f8ae4795a8cd211c1336c05482`
-- Materializer: `@ankhorage/projects@0.6.0`
-- Generated-app metadata owner: `@ankhorage/expo-runtime@7.5.0`
+- Materializer: `@ankhorage/projects@0.7.1`
+- Navigator: `@ankhorage/navigator@3.7.1`
+- Generated-app metadata owner: `@ankhorage/expo-runtime@7.6.0`
 - Runtime bindings: `@ankhorage/runtime@^5.6.4`
 - UI bindings: `@ankhorage/zora@^27.2.0`
 
@@ -19,6 +20,7 @@ is resolved only by the trusted host at runtime.
 ## Validate locally
 
 ```sh
-bun install --frozen-lockfile --ignore-scripts
-HOME="$(mktemp -d)" npx expo export --platform web
+bun install --frozen-lockfile
+ankh devtools sync .
+CI=1 EXPO_NO_TELEMETRY=1 npx expo export --platform web
 ```

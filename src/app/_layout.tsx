@@ -1,10 +1,12 @@
 import { Stack } from 'expo-router';
+import { GeneratedRuntimeShell as NavigatorRootLayoutWrapper } from '@/generated/runtimeShell';
 
 export default function NavigatorLayout() {
   return (
-    <Stack initialRouteName="acquisition" screenOptions={{ headerShown: false }}>
+    <NavigatorRootLayoutWrapper>
+      <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="acquisition"
+        name="index"
         options={{
           title: 'Companies',
         }}
@@ -28,5 +30,6 @@ export default function NavigatorLayout() {
         }}
       />
     </Stack>
+    </NavigatorRootLayoutWrapper>
   );
 }

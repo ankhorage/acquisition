@@ -11,9 +11,9 @@ bun.lock
 package.json
 src/ankh.manifest.ts
 src/app/_layout.tsx
-src/app/acquisition.tsx
 src/app/company-detail-alpenblick-digital.tsx
 src/app/company-detail-seeblick-architektur.tsx
 src/app/company-detail-wetzikon-technik.tsx
+src/app/index.tsx
 src/generated/runtimeManifestScreens.tsx
 src/generated/runtimeShell.tsx
