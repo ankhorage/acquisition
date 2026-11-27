@@ -1,0 +1,16 @@
+{
+  "package": "@ankhorage/templates",
+  "version": "12.7.6",
+  "projectSlug": "acquisition",
+  "displayName": "Acquisition",
+  "category": "business_productivity",
+  "templateSlug": "acquisition",
+  "selector": "business_productivity/acquisition",
+  "assets": [
+    {
+      "mediaId": "acquisition-target",
+      "targetPath": "assets/images/svg/acquisition-target.svg",
+      "contentType": "image/svg+xml"
+    }
+  ]
+}
